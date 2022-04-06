@@ -1,0 +1,26 @@
+{
+  "devDependencies": {
+    "@openzeppelin/contracts": "^4.4.1",
+    "@openzeppelin/test-helpers": "^0.5.15",
+    "aws-api-gateway-client": "^0.3.7",
+    "axios": "^0.24.0",
+    "chai": "^4.3.4",
+    "ganache-cli": "^6.12.2",
+    "https": "^1.0.0",
+    "truffle": "^5.4.26",
+    "truffle-plugin-verify": "^0.5.20",
+    "web3-utils": "^1.6.1"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^2.0.0",
+    "bignumber.js": "^9.0.2",
+    "ethers": "^5.5.2",
+    "linq": "^4.0.0",
+    "querystring": "^0.2.1",
+    "text-encoding": "^0.7.0",
+    "truffle-flattener": "^1.5.0",
+    "truffle-privatekey-provider": "^1.5.0",
+    "web3-privatekey-provider": "^1.2.0",
+    "yarn": "^1.22.17"
+  }
+}
