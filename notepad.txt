@@ -1,0 +1,101 @@
+
+Current eth stack:
+  IDE: Atom
+  Language: Node.js
+  Contract deployer: Truffle > Hardhat
+  Contract language: Solidity
+  Contract inheritance: OpenZeppelin
+  Testing: Chai
+  Test helpers
+
+Important checks
+5. Make sure solidity versions align ^0.8
+
+CLI commands
+2. $ npm init -y //initialize project
+3. $ npm install --save-dev truffle //install truffle
+4. $ npx truffle init //initialize truffle for project
+6. npx truffle compile //compile truffle contracts
+7. npm install --save-dev @openzeppelin/contracts //install inheritance contracts
+8. npm install --save-dev ganache-client //install ganache cli
+9. npx ganache-cli //Start ganache client
+10. npx truffle migrate --network development //Deploy contracts to networks
+11. npx truffle console --network development //Open interactive truffle console on network
+12. npx truffle exec --network development ./scripts/index.js //Execute js
+13. npm install --save-dev @openzeppelin/test-helpers //Install openzeppelin helpers for complex tests
+
+
+
+To deploy contract to Ganache client
+
+1. Configure truffle-config.js
+  networks: {
+    development: {
+      host: "127.0.0.1",
+      port: 8545
+      network_id = "*"
+    }
+  }
+2. Create js migration to deploy contract
+  //migrations/2_deploy.js
+  const Box = artifacts.require('Box');
+  module.exports = async function (deployer) {
+    await deployer.deploy(Box);
+  };
+
+3. Start ganache cli
+  $ npx ganache-cli //use --deterministic to get same wallet addresses
+
+4. In another cmd window,
+  $ npx truffle migrate --network development
+
+To execute js script
+1. Example script
+//scripts/index.js
+module.exports = async function main (callback) {
+  try {
+    //Your code here
+    const accounts = await web3.eth.getAccounts();
+    console.log(accounts)
+
+    callback(0);
+  } catch (error) {
+    console.error(error);
+    callback(1);
+  }
+};
+2. Exec in truffle
+  $ npx truffle exec --network development ./scripts/index.js
+
+
+Executing chai tests
+
+  1. Create tests
+    // test/Box.test.js
+    // Load dependencies
+
+    const { expect } = require('chai');
+
+    // Load compiled artifacts
+    const Box = artifacts/require('Box');
+
+    //Start test block
+    contract('Box', function () {
+      beforeEach(async function() {
+        //Deploy a new Box contract for each test
+        this.box = await Box.new();
+      });
+
+      // Test case
+      it('retrieve returns a value previously stored', async function () {
+        // Store  a value
+        await this.box.store(42);
+
+        // Test is the returned value is the same one
+        // Note that we need to use strings to compare the 256 bit integers
+        expect((await this.box.retrieve()).toString()).to.equal('42');
+      });
+    });
+
+  2. run tests in terminal
+    $ npx truffle test
